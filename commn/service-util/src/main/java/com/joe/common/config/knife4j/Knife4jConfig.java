@@ -27,14 +27,14 @@ public class Knife4jConfig {//对于配置类要求可以看懂即可，不用�
                 .paths(PathSelectors.any())
                 .build();
     }
-    private static final String API_TILE="微博项目";
+    private static final String API_TILE="云尚办公";
     //文档信息配置
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 // 文档标题
                 .title(API_TILE)
                 // 文档描述信息
-                .description("微博项目在线API文档")
+                .description("云尚办公在线API文档")
                 // 文档版本号
                 .version("1.0")
                 .build();

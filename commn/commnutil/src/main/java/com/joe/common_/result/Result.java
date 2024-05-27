@@ -30,4 +30,8 @@ public class Result<T> {
         result.setMessage(resultCodeEnum.getMessage());
         return result;
     }
+    public Result<T> message(String msg){
+        this.setMessage(msg);
+        return this;
+    }
 }

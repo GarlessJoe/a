@@ -1,4 +1,4 @@
-package com.atguigu.system.test;
+package com.joe.code;
 
 
 import com.baomidou.mybatisplus.annotation.DbType;
@@ -19,25 +19,25 @@ public class CodeGet {
         // 2、全局配置
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        gc.setOutputDir("C:\\Users\\Administrator\\Desktop\\guigu-oa\\guigu-oa-parent\\service-oa"+"/src/main/java");
+        gc.setOutputDir("D:\\java 学习\\云尚办公\\work2\\service-oa"+"/src/main/java");
 
         gc.setServiceName("%sService");	//去掉Service接口的首字母I
-        gc.setAuthor("atguigu");
+        gc.setAuthor("joe");
         gc.setOpen(false);
         mpg.setGlobalConfig(gc);
 
         // 3、数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/guigu-oa?serverTimezone=GMT%2B8&useSSL=false");
+        dsc.setUrl("jdbc:mysql://localhost:3306/guigu-oa?serverTimezone=GMT%2B8&useSSL=false&characterEncoding=utf-8");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("root");
+        dsc.setPassword("123456");
         dsc.setDbType(DbType.MYSQL);
         mpg.setDataSource(dsc);
 
         // 4、包配置
         PackageConfig pc = new PackageConfig();
-        pc.setParent("com.atguigu");
+        pc.setParent("com.joe");
         pc.setModuleName("auth"); //模块名
         pc.setController("controller");
         pc.setService("service");
@@ -47,7 +47,7 @@ public class CodeGet {
         // 5、策略配置
         StrategyConfig strategy = new StrategyConfig();
 
-        strategy.setInclude("sys_user");
+        strategy.setInclude("sys_role_menu");
 
         strategy.setNaming(NamingStrategy.underline_to_camel);//数据库表映射到实体的命名策略
 
