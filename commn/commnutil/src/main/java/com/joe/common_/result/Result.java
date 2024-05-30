@@ -30,6 +30,14 @@ public class Result<T> {
         result.setMessage(resultCodeEnum.getMessage());
         return result;
     }
+    public static<T> Result<T> build(T data,Integer n , String message){
+        Result<T> result = new Result<>();
+        result.setCode(n);
+        result.setMessage(message);
+        if(data!=null)
+            result.setData(data);
+        return result;
+    }
     public Result<T> message(String msg){
         this.setMessage(msg);
         return this;
