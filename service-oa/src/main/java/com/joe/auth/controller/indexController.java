@@ -1,32 +1,56 @@
 package com.joe.auth.controller;
 
-import com.joe.common_.result.Result;
-import io.swagger.annotations.Api;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.joe.auth.service.SysUserService;
+import com.joe.common.exception.OutException;
+import com.joe.common_.MD5.MD5;
+import com.joe.common_.jwt.jwtHelper;
 
+import com.joe.common_.result.Result;
+import com.joe.model.system.SysUser;
+import com.joe.vo.system.LoginVo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @Api(tags = "后台登录管理")
 @RestController
 @RequestMapping("/admin/system/index")
 public class indexController {
-    //login
+    @Autowired
+    private SysUserService sysUserService;
+
+    @ApiOperation(value = "登录")
     @PostMapping("login")
-    public Result login(){
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("token" , "admin-token");
+    public Result login(@RequestBody LoginVo loginVo) {
+        SysUser sysUser = sysUserService.getByUsername(loginVo.getUsername());
+        if(null == sysUser) {
+            throw new OutException(201,"用户不存在");
+        }
+        if(!MD5.encrypt(loginVo.getPassword()).equals(sysUser.getPassword())) {
+            throw new OutException(201,"密码错误");
+        }
+        if(sysUser.getStatus().intValue() == 0) {
+            throw new OutException(201,"用户被禁用");
+        }
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("token", jwtHelper.createJWT(sysUser.getId(), sysUser.getUsername()));
         return Result.ok(map);
     }
+    @ApiOperation(value = "获取用户信息")
     @GetMapping("info")
-    public Result info(){
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("roles" , "[admin]");
-        map.put("name" , "admin");
-        map.put("avatar" , "https://oss.aliyuncs.com/aliyun_id_photo_bucket/default_handsome.jpg");
+    public Result info(HttpServletRequest request) {
+        System.out.println("获取到用户信息");
+        String username = jwtHelper.getUserName(request.getHeader("token"));
+        Map<String, Object> map = sysUserService.getUserInfo(username);
         return Result.ok(map);
     }
     @PostMapping("logout")
