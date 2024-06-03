@@ -1,6 +1,9 @@
 package com.joe.auth.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.joe.auth.mapper.SysUserMapper;
 import com.joe.auth.service.SysMenuService;
 import com.joe.auth.service.SysUserService;
@@ -10,6 +13,7 @@ import com.joe.vo.system.RouterVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -29,7 +33,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private SysMenuService sysMenuService;
     @Override
     public SysUser getByUsername(String username) {
-        return this.getOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, username));
+        return this.getOne(new LambdaQueryWrapper<SysUser>()
+                .eq(SysUser::getUsername, username)
+                .eq(SysUser::getIsDeleted, 0));
     }
 
     @Override
@@ -37,6 +43,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         SysUser sysUser = baseMapper.selectById(id);
         sysUser.setStatus(status);
         baseMapper.updateById(sysUser);
+    }
+
+    @Override
+    public int removeById(Long id) {
+        SysUser user = baseMapper.selectById(id);
+        LambdaUpdateWrapper<SysUser> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(SysUser::getId , id)
+                .eq(SysUser::getIsDeleted , 0)
+                .set(SysUser::getIsDeleted , id);
+        int update = baseMapper.update(user, wrapper);
+
+        return update;
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.joe.auth.controller;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.joe.auth.service.SysRoleService;
@@ -34,6 +36,7 @@ public class sysRoleController {
 
     }
     //为用户分配角色
+    @PreAuthorize("hasAuthority('bnt.sysUser.assignRole')")
     @ApiOperation("为用户分配角色")
     @PostMapping("/doAssign")
     public Result doAssign(@RequestBody AssignRoleVo assignRoleVo){
@@ -84,6 +87,7 @@ public class sysRoleController {
         }
     }
     @ApiOperation("根据id查询")
+    @PreAuthorize("hasAuthority('bnt.sysRole.list')")
     @GetMapping("get/{id}")
     public Result get(@PathVariable Long id){
         SysRole role = srs.getById(id);
@@ -106,6 +110,7 @@ public class sysRoleController {
     @ApiOperation("根据id删除")
     @DeleteMapping("remove/{id}")
     public Result remove(@PathVariable Long id){
+
         boolean isSuccess = srs.removeById(id);
         if(isSuccess){
             return Result.ok();

@@ -17,6 +17,6 @@ import java.util.Map;
 public interface SysUserService extends IService<SysUser> {
     SysUser getByUsername(String username);
     void upadteStatus(Long id, Integer status);
-
+    int removeById(Long id);
     Map<String, Object> getUserInfo(String username);
 }

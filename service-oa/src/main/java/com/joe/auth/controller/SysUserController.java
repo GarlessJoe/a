@@ -2,15 +2,20 @@ package com.joe.auth.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.joe.auth.service.SysUserService;
+import com.joe.common_.MD5.MD5;
 import com.joe.common_.result.Result;
+import com.joe.model.system.SysRole;
 import com.joe.model.system.SysUser;
 import com.joe.vo.system.SysUserQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +34,7 @@ public class SysUserController {
     @Autowired
     private SysUserService service;
     @ApiOperation("用户提交分页查询")
+    @PreAuthorize("hasAuthority('bnt.sysUser.list')")
     @GetMapping("{page}/{limit}")
     public Result index(@PathVariable Long page , @PathVariable Long limit , SysUserQueryVo sysUserQueryVo){
         //创建page对象
@@ -54,27 +60,29 @@ public class SysUserController {
         IPage<SysUser> pagemodel = service.page(pages, queryWrapper);
         return Result.ok(pagemodel);
     }
+    @PreAuthorize("hasAuthority('bnt.sysUser.list')")
     @ApiOperation(value = "获取用户")
     @GetMapping("get/{id}")
     public Result get(@PathVariable Long id) {
         SysUser user = service.getById(id);
         return Result.ok(user);
     }
-
+    @PreAuthorize("hasAuthority('bnt.sysUser.add')")
     @ApiOperation(value = "保存用户")
     @PostMapping("save")
     public Result save(@RequestBody SysUser user) {
+        user.setPassword(MD5.encrypt(user.getPassword()));
         service.save(user);
         return Result.ok();
     }
-
+    @PreAuthorize("hasAuthority('bnt.sysUser.update')")
     @ApiOperation(value = "更新用户")
     @PutMapping("update")
     public Result updateById(@RequestBody SysUser user) {
         service.updateById(user);
         return Result.ok();
     }
-
+    @PreAuthorize("hasAuthority('bnt.sysUser.remove')")
     @ApiOperation(value = "删除用户")
     @DeleteMapping("remove/{id}")
     public Result remove(@PathVariable Long id) {

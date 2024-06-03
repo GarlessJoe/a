@@ -3,6 +3,7 @@ package com.joe.auth.controller;
 
 import com.joe.vo.system.AssignMenuVo;
 import com.joe.vo.system.AssignRoleVo;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -47,21 +48,21 @@ public class SysMenuController {
         List<SysMenu> list = sysMenuService.findNodes();
         return Result.ok(list);
     }
-
+    @PreAuthorize("hasAuthority('bnt.sysMenu.add')")
     @ApiOperation(value = "新增菜单")
     @PostMapping("save")
     public Result save(@RequestBody SysMenu permission) {
         sysMenuService.save(permission);
         return Result.ok();
     }
-
+    @PreAuthorize("hasAuthority('bnt.sysMenu.update')")
     @ApiOperation(value = "修改菜单")
     @PutMapping("update")
     public Result updateById(@RequestBody SysMenu permission) {
         sysMenuService.updateById(permission);
         return Result.ok();
     }
-
+    @PreAuthorize("hasAuthority('bnt.sysMenu.remove')")
     @ApiOperation(value = "删除菜单")
     @DeleteMapping("remove/{id}")
     public Result remove(@PathVariable Long id) {
