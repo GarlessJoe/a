@@ -6,6 +6,8 @@ import com.joe.model.process.ProcessTemplate;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 审批模板 服务类
@@ -17,4 +19,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface OaProcessTemplateService extends IService<ProcessTemplate> {
 
     IPage<ProcessTemplate> selectProcessTemplate(Page<ProcessTemplate> processTemplatePage);
+
+    void publish(Long id);
+
+    List<ProcessTemplate> selectProcessTemplateById(Long id);
 }

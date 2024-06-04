@@ -65,4 +65,9 @@ public class jwtHelper {
                 .withExpiresAt(new Date(System.currentTimeMillis()+ tokenExpiration)) // 指定令牌的过期时间
                 .sign(Algorithm.HMAC256(SING));//签名
     }
+
+    public static void main(String[] args) {
+        String token = createJWT(1L , "admin");
+        System.out.println(token);
+    }
 }

@@ -7,13 +7,15 @@ import com.joe.model.process.ProcessTemplate;
 
 import com.joe.model.process.ProcessType;
 import com.joe.process.mapper.OaProcessTemplateMapper;
+import com.joe.process.service.OaProcessService;
 import com.joe.process.service.OaProcessTemplateService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.joe.process.service.OaProcessTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +30,8 @@ import java.util.List;
 public class OaProcessTemplateServiceImpl extends ServiceImpl<OaProcessTemplateMapper, ProcessTemplate> implements OaProcessTemplateService {
 @Autowired
 private OaProcessTypeService service;
+@Autowired
+private OaProcessService processService;
     @Override
     public IPage<ProcessTemplate> selectProcessTemplate(Page<ProcessTemplate> page) {
         Page<ProcessTemplate> processTemplatePage = baseMapper.selectPage(page, null);
@@ -44,5 +48,21 @@ private OaProcessTypeService service;
             }
         }
         return  processTemplatePage;
+    }
+    @Transactional
+    @Override
+    public void publish(Long id) {
+        //修改模版发布状态1 已经发布
+        ProcessTemplate processTemplate = baseMapper.selectById(id);
+        processTemplate.setStatus(1);
+        baseMapper.updateById(processTemplate);
+       if(!StringUtils.isEmpty(processTemplate.getProcessDefinitionPath())){
+                processService.deployByZip(processTemplate.getProcessDefinitionPath());
+       }
+    }
+
+    @Override
+    public List<ProcessTemplate> selectProcessTemplateById(Long id) {
+        return baseMapper.selectList(new LambdaQueryWrapper<ProcessTemplate>().eq(ProcessTemplate::getProcessTypeId , id));
     }
 }
