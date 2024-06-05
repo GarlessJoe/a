@@ -9,6 +9,7 @@ import com.joe.auth.service.SysMenuService;
 import com.joe.auth.service.SysUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.joe.model.system.SysUser;
+import com.joe.security.custom.LoginUserInfoHelper;
 import com.joe.vo.system.RouterVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,5 +75,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         result.put("buttons", permsList);
         result.put("routers", routerVoList);
         return result;
+    }
+
+    @Override
+    public Map<String, Object> getCurrentUser() {
+        HashMap<String, Object> map = new HashMap<>();
+        SysUser user = baseMapper.selectById( LoginUserInfoHelper.getUserId());
+        map.put("name", user.getUsername());
+        map.put("phone" ,user.getPhone());
+        return map;
     }
 }

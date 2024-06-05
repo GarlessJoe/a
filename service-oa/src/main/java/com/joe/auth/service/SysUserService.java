@@ -19,4 +19,6 @@ public interface SysUserService extends IService<SysUser> {
     void upadteStatus(Long id, Integer status);
     int removeById(Long id);
     Map<String, Object> getUserInfo(String username);
+
+    Map<String, Object> getCurrentUser();
 }

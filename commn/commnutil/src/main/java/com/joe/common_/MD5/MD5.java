@@ -1,5 +1,6 @@
 package com.joe.common_.MD5;
 
+import org.springframework.util.StringUtils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -27,5 +28,10 @@ public final class MD5 {
             e.printStackTrace();
             throw new RuntimeException("MD5加密出错！！+" + e);
         }
+    }
+
+    public static void main(String[] args) {
+        boolean a = StringUtils.isEmpty("a");
+        System.out.println(a);
     }
 }

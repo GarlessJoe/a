@@ -4,18 +4,16 @@ package com.joe.process.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.joe.common_.result.Result;
+import com.joe.model.process.Process;
 import com.joe.process.service.OaProcessService;
 import com.joe.vo.process.ProcessQueryVo;
 import com.joe.vo.process.ProcessVo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -25,8 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
  * @author joe
  * @since 2024-06-03
  */
+@Api(tags = "process")
 @RestController
 @RequestMapping(value = "/admin/process/")
+@CrossOrigin  //跨域
 public class OaProcessController {
     @Autowired
     private OaProcessService service;

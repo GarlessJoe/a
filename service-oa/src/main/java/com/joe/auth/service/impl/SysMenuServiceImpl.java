@@ -6,13 +6,13 @@ import com.joe.auth.utils.MenuHelper;
 import com.joe.auth.mapper.SysMenuMapper;
 import com.joe.auth.service.SysMenuService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.joe.auth.utils.MenuHelper;
 import com.joe.common.exception.OutException;
 import com.joe.model.system.SysMenu;
 import com.joe.model.system.SysRoleMenu;
 import com.joe.vo.system.AssignMenuVo;
 import com.joe.vo.system.MetaVo;
 import com.joe.vo.system.RouterVo;
+import com.joe.vo.wechat.MenuVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -118,6 +118,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
             service.save(sysRoleMenu);
         }
     }
+
+
     private List<RouterVo> buildMenus(List<SysMenu> menus) {
         List<RouterVo> routers = new LinkedList<RouterVo>();
         for (SysMenu menu : menus) {

@@ -8,8 +8,8 @@ import com.joe.model.process.ProcessTemplate;
 import com.joe.process.service.OaProcessTemplateService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.aspectj.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.system.ApplicationHome;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
@@ -81,7 +81,8 @@ public class OaProcessTemplateController {
     @ApiOperation(value = "上传流程定义")
     @PostMapping("/uploadProcessDefinition")
     public Result uploadProcessDefinition(MultipartFile file) throws FileNotFoundException {
-        String classpath = new File(ResourceUtils.getURL("classpath:").getPath()).getAbsolutePath();
+      String classpath =  System.getProperty("user.dir") + "\\service-oa\\target\\classes";
+        System.out.println(classpath);
         File tempFile = new File(classpath + "/processes/");
         if(!tempFile.exists()){
                 tempFile.mkdirs();
@@ -107,6 +108,11 @@ public class OaProcessTemplateController {
     public Result publish(@PathVariable Long id) {
         service.publish(id);
         return Result.ok();
+    }
+
+    public static void main(String[] args) {
+        String classpath =  System.getProperty("user.dir") + "\\service-oa\\target\\classes";
+        System.out.println(classpath);
     }
 }
 

@@ -6,7 +6,6 @@ import org.activiti.engine.TaskService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
-import org.activiti.engine.task.TaskQuery;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,8 +26,8 @@ public class processtest {
     public void deployProcess(){
         //流程部署
         Deployment process = service.createDeployment()
-                .addClasspathResource("process/qingjia.bpmn20.xml")
-                .addClasspathResource("process/diagram.png")
+                .addClasspathResource("processes/qingjia.bpmn20.xml")
+                .addClasspathResource("processes/diagram.png")
                 .name("请假申请流程")
                 .deploy();
         System.out.println(process.getId());

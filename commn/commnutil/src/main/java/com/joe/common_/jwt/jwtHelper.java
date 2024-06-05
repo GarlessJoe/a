@@ -6,11 +6,9 @@ import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.util.StringUtils;
 
-import java.util.Calendar;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+
 
 
 public class jwtHelper {
@@ -36,7 +34,7 @@ public class jwtHelper {
     }
     public static Long getUserId(String token){
         try {
-            if (StringUtils.isEmpty(token)) return null;
+            if (token == null) return null;
 
             Claim userId = getTokenInfo(token).getClaim("userId");
             Integer anInt = userId.asInt();
@@ -48,7 +46,7 @@ public class jwtHelper {
     }
     public static String  getUserName(String token){
         try {
-            if (StringUtils.isEmpty(token)) return null;
+            if (token == null) return null;
 
             Claim userName= getTokenInfo(token).getClaim("userName");
             String s = userName.asString();
@@ -67,7 +65,8 @@ public class jwtHelper {
     }
 
     public static void main(String[] args) {
-        String token = createJWT(1L , "admin");
+        String token = getUserName("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6Imxpc2kiLCJleHAiOjE3MTg5OTExNTMsInVzZXJJZCI6NH0.sFsYcRyBGuabtXZrRHXJQosW9hQa9BxKzEwTsIDchs4");
         System.out.println(token);
+
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
-@MapperScan(basePackages = {"com.joe.auth.mapper" , "com.joe.process.mapper"})
+@MapperScan(basePackages = {"com.joe.auth.mapper" , "com.joe.process.mapper" , "com.joe.wechat.mapper"})
 @SpringBootApplication
 public class serviceeAuthApplication implements WebMvcConfigurer{
     public static void main(String[] args) {

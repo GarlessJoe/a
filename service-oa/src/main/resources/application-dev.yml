@@ -38,3 +38,6 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:com/joe/*/mapper/xml/*.xml
+wechat:
+  mpAppId: wx849f645c47e00ad3
+  mpAppSecere: dab32a03b72a629b78ad1751e6a84284

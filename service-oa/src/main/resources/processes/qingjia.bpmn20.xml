@@ -2,13 +2,13 @@
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
   <process id="qingjia" name="qingjia" isExecutable="true">
     <startEvent id="sid-8bdfa54e-7a69-4caa-879b-23e02d804d19" name="start"/>
-    <userTask id="sid-18408476-cde9-45a6-897b-89b16f46d355" name="张三审批">
+    <userTask id="sid-18408476-cde9-45a6-897b-89b16f46d355" name="张三审批" activiti:assignee="zhangsan">
       <extensionElements>
         <activiti:formProperty id="Property 1"/>
       </extensionElements>
     </userTask>
     <sequenceFlow id="sid-850913df-ec05-4ca3-ba27-d27f02df5f12" sourceRef="sid-8bdfa54e-7a69-4caa-879b-23e02d804d19" targetRef="sid-18408476-cde9-45a6-897b-89b16f46d355"/>
-    <userTask id="sid-04403c9b-8d36-4ddd-b5cc-a159457d6b57" name="李四审批">
+    <userTask id="sid-04403c9b-8d36-4ddd-b5cc-a159457d6b57" name="李四审批" activiti:assignee="lisi">
       <extensionElements>
         <activiti:formProperty id="Property 1"/>
       </extensionElements>
